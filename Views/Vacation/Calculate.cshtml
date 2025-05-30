@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Beregn feriedager";
+}
+
+<h2>Beregn feriedager</h2>
+
+<form asp-action="Calculate" method="post">
+    <div>
+        <label for="fromDate">Fra dato:</label>
+        <input type="date" name="fromDate" required />
+    </div>
+
+    <div>
+        <label for="toDate">Til dato:</label>
+        <input type="date" name="toDate" required />
+    </div>
+
+    <div>
+        <label for="countryCode">Land:</label>
+        <select name="countryCode" required>
+            <option value="NO">🇳🇴 Norge</option>
+            <option value="SE">🇸🇪 Sverige</option>
+            <option value="DK">🇩🇰 Danmark</option>
+            <option value="DE">🇩🇪 Tyskland</option>
+            <option value="US">🇺🇸 USA</option>
+            <option value="GB">🇬🇧 Storbritannia</option>
+            <option value="FR">🇫🇷 Frankrike</option>
+        </select>
+    </div>
+
+    <div style="margin-top: 10px;">
+        <button type="submit">Beregn</button>
+    </div>
+
+    @if (ViewBag.Error != null)
+    {
+        <p style="color:red; margin-top: 10px;">@ViewBag.Error</p>
+    }
+</form>
+
+@if (ViewBag.FromDate != null)
+{
+    <div style="margin-top: 30px; padding: 20px; background-color: #f5f5f5; border: 1px solid #ccc;">
+        <h4>📆 Periode:</h4>
+        <p><strong>Fra:</strong> @Convert.ToDateTime(ViewBag.FromDate).ToString("dd.MM.yyyy")</p>
+        <p><strong>Til:</strong> @Convert.ToDateTime(ViewBag.ToDate).ToString("dd.MM.yyyy")</p>
+
+        <h4>🧾 Fratrekk fra totalperiode:</h4>
+        <ul>
+            <li>🧘 Helgedager (lør/søn): <strong>@ViewBag.WeekendDays</strong></li>
+            <li>🔴 Helligdager: <strong>@ViewBag.HolidayCount</strong></li>
+            <li>🏫 Planleggingsdager: <strong>@ViewBag.PlanningCount</strong></li>
+        </ul>
+
+        <div style="margin-top: 20px; padding: 15px; background-color: #eaf6ff; border-left: 6px solid #007bff;">
+            <h3>✔️ Antall feriedager som trekkes: <span style="color: #007bff">@ViewBag.UsedVacationDays</span></h3>
+        </div>
+    </div>
+}

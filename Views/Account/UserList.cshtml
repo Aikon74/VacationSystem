@@ -1,0 +1,27 @@
+﻿@model List<VacationSystem.Models.User>
+@{
+    ViewData["Title"] = "Brukerliste";
+}
+
+<h2>Brukerliste</h2>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Bruker-ID</th>
+            <th>Handlinger</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserId</td>
+                <td>
+                    <a href="/Account/ChangePassword/@user.UserId">🔐 Endre passord</a> |
+                    <a href="/Account/DeleteUser/@user.UserId" onclick="return confirm('Er du sikker på at du vil slette brukeren?');">🗑️ Slett</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

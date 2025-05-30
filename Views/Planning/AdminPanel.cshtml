@@ -1,0 +1,43 @@
+﻿@model List<VacationSystem.Models.PlanningSuggestion>
+@{
+    ViewData["Title"] = "Admin: Planleggingsforslag";
+}
+
+<h2>Alle forslag til planleggingsdager</h2>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Bruker</th>
+            <th>Dato</th>
+            <th>Institusjon</th>
+            <th>Status</th>
+            <th>Handling</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.UserId</td>
+                <td>@item.Date.ToString("dd.MM.yyyy")</td>
+                <td>@item.Institution</td>
+                <td>@(item.Approved ? "✅ Godkjent" : "⏳ Venter")</td>
+                <td>
+                    @if (!item.Approved)
+                    {
+                        <a href="/Planning/Approve/@item.Id">✅ Godkjenn</a>
+ 
+                    < a href = "/Planning/Reject/@item.Id" >❌ Avslå </ a >
+                    }
+                    else
+                    {
+                        <span>✔</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
